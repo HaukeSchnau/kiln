@@ -1,13 +1,13 @@
-# Kiln web UI v0: brief
+# Calder web UI v0: brief
 
-Kiln is Hauke's CI/CD system (Effect TypeScript, Nix, his fleet of srv-1, srv-2 and m1). The design exploration lives in `~/Code/CI-CD-Lab/doc/` (published at https://files.schnau.dev/html/ci-cd-lab/). Hauke chose the prototype in `~/Code/CI-CD-Lab/doc/kiln-ui/`: the "Workbench" (direction A in `doc/ui-dirs/a/`) with the "Console" overview brought in from direction B (`doc/ui-dirs/b/`). He also wants B's rollout page "as the page behind every rollout". Read `doc/ui-dirs/BRIEF.md` for what he values and the AI tells he hates. Read the prototype's code and look at its screenshots (`doc/kiln-ui/shot-*.png`) before you write anything.
+Calder is Hauke's CI/CD system (Effect TypeScript, Nix, his fleet of srv-1, srv-2 and m1). The design exploration lives in `~/Code/CI-CD-Lab/doc/` (published at https://files.schnau.dev/html/ci-cd-lab/). Hauke chose the prototype in `~/Code/CI-CD-Lab/doc/calder-ui/`: the "Workbench" (direction A in `doc/ui-dirs/a/`) with the "Console" overview brought in from direction B (`doc/ui-dirs/b/`). He also wants B's rollout page "as the page behind every rollout". Read `doc/ui-dirs/BRIEF.md` for what he values and the AI tells he hates. Read the prototype's code and look at its screenshots (`doc/calder-ui/shot-*.png`) before you write anything.
 
-Your job: build the real UI v0 in `~/Code/kiln/packages/ui/` as React 19 + Vite 8 + TypeScript, on real data from the controller, keeping the prototype's look (dark theme, fonts, density, glaze colors by content hash, graph view, hairlines and no cards).
+Your job: build the real UI v0 in `~/Code/calder/packages/ui/` as React 19 + Vite 8 + TypeScript, on real data from the controller, keeping the prototype's look (dark theme, fonts, density, glaze colors by content hash, graph view, hairlines and no cards).
 
 ## Ownership
 
-- You own `~/Code/kiln/packages/ui/` only. Don't edit other packages. The rest of the repo is being written at the same time by another agent (the controller in `packages/kiln`).
-- `packages/api` (`@kiln/api`) is the contract: `src/Domain.ts` (Schemas) and `src/UiRpc.ts` (`UiRpcs`, an Effect RPC group). Treat it as read-only. If something in it blocks you, write down what you need in `packages/ui/NOTES.md` and work around it in the UI.
+- You own `~/Code/calder/packages/ui/` only. Don't edit other packages. The rest of the repo is being written at the same time by another agent (the controller in `packages/calder`).
+- `packages/api` (`@calder-ci/api`) is the contract: `src/Domain.ts` (Schemas) and `src/UiRpc.ts` (`UiRpcs`, an Effect RPC group). Treat it as read-only. If something in it blocks you, write down what you need in `packages/ui/NOTES.md` and work around it in the UI.
 - The repo uses jj, but don't commit. Your final message hands over the files.
 
 ## Transport
@@ -35,12 +35,12 @@ Your job: build the real UI v0 in `~/Code/kiln/packages/ui/` as React 19 + Vite 
 
 ## Quality bar
 
-Hauke judged earlier UIs "sloppy", "card heavy", full of "AI tells", with "too much going on". He wants a professional tool for experts: dense but calm, the important bits at a glance, aligned columns, tabular numerals, colour only for status and identity, terse sentence-case labels, no em dashes in copy, no emoji, no gradients or glows, no pills for everything. Take screenshots with agent-browser (own session: `export AGENT_BROWSER_SESSION=kiln-ui-v0`; `agent-browser skills get core` first) at 1512×945 and 390×844. Review them critically, at least three rounds. Save the final screenshots as `packages/ui/shot-overview.png`, `shot-run.png`, `shot-rollout.png` and `shot-phone.png`.
+Hauke judged earlier UIs "sloppy", "card heavy", full of "AI tells", with "too much going on". He wants a professional tool for experts: dense but calm, the important bits at a glance, aligned columns, tabular numerals, colour only for status and identity, terse sentence-case labels, no em dashes in copy, no emoji, no gradients or glows, no pills for everything. Take screenshots with agent-browser (own session: `export AGENT_BROWSER_SESSION=calder-ui-v0`; `agent-browser skills get core` first) at 1512×945 and 390×844. Review them critically, at least three rounds. Save the final screenshots as `packages/ui/shot-overview.png`, `shot-run.png`, `shot-rollout.png` and `shot-phone.png`.
 
 ## Technical
 
-- Package `@kiln/ui` in the pnpm workspace (`packages/*` is already included). Run `pnpm install` from `~/Code/kiln`. Use exact versions: react 19.3.0, react-dom 19.3.0, vite 8.3.2, @vitejs/plugin-react 6.1.1, typescript 7.0.2 (root), effect 4.0.0.
-- `pnpm --filter @kiln/ui build` must produce `dist/` with relative asset paths. `tsc -p packages/ui` must pass with the root `tsconfig.base.json` settings. Add `"lib": ["ES2024", "DOM", "DOM.Iterable"]` and `"jsx": "react-jsx"` in your own tsconfig.
+- Package `@calder-ci/ui` in the pnpm workspace (`packages/*` is already included). Run `pnpm install` from `~/Code/calder`. Use exact versions: react 19.3.0, react-dom 19.3.0, vite 8.3.2, @vitejs/plugin-react 6.1.1, typescript 7.0.2 (root), effect 4.0.0.
+- `pnpm --filter @calder-ci/ui build` must produce `dist/` with relative asset paths. `tsc -p packages/ui` must pass with the root `tsconfig.base.json` settings. Add `"lib": ["ES2024", "DOM", "DOM.Iterable"]` and `"jsx": "react-jsx"` in your own tsconfig.
 - Serve for testing on 127.0.0.1 only (ports 8790 to 8799 are yours). Stop servers when you're done. `pkill -f` kills its own shell; use `pgrep -f '[v]ite'` and kill pids.
 - Keep the code idiomatic and typed, with no `any` and no one-line casting wrappers. Comment only what the code can't say.
 
